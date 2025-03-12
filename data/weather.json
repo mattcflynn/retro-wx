@@ -1,10 +1,10 @@
 {
   "current": {
-    "temp": 50.1
+    "temp": 50.9
   },
   "forecast": {
     "high": 50.9,
-    "low": 44,
+    "low": 43.1,
     "hourly": [
       {
         "hour": 0,
@@ -121,60 +121,60 @@
       {
         "hour": 16,
         "temp": 49,
-        "chance": 32,
-        "amount": 0.012,
-        "cloudCover": 88
-      },
-      {
-        "hour": 17,
-        "temp": 49,
-        "chance": 49,
+        "chance": 52,
         "amount": 0.02,
         "cloudCover": 90
       },
       {
-        "hour": 18,
+        "hour": 17,
         "temp": 49,
-        "chance": 71,
-        "amount": 0.012,
-        "cloudCover": 89
+        "chance": 62,
+        "amount": 0,
+        "cloudCover": 90
+      },
+      {
+        "hour": 18,
+        "temp": 47,
+        "chance": 78,
+        "amount": 0.02,
+        "cloudCover": 90
       },
       {
         "hour": 19,
         "temp": 46,
-        "chance": 69,
-        "amount": 0.051,
-        "cloudCover": 89
+        "chance": 78,
+        "amount": 0.031,
+        "cloudCover": 90
       },
       {
         "hour": 20,
         "temp": 45,
-        "chance": 72,
-        "amount": 0.02,
+        "chance": 73,
+        "amount": 0.012,
         "cloudCover": 90
       },
       {
         "hour": 21,
         "temp": 45,
-        "chance": 83,
+        "chance": 92,
         "amount": 0.02,
-        "cloudCover": 91
+        "cloudCover": 95
       },
       {
         "hour": 22,
         "temp": 44,
-        "chance": 64,
-        "amount": 0.059,
-        "cloudCover": 86
+        "chance": 91,
+        "amount": 0.031,
+        "cloudCover": 94
       },
       {
         "hour": 23,
-        "temp": 44,
-        "chance": 55,
-        "amount": 0.047,
-        "cloudCover": 88
+        "temp": 43,
+        "chance": 90,
+        "amount": 0.067,
+        "cloudCover": 94
       }
     ]
   },
-  "lastUpdated": "2025-03-12T22:39:39.090Z"
+  "lastUpdated": "2025-03-12T23:16:57.096Z"
 }
