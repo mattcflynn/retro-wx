@@ -1043,34 +1043,23 @@
                     initializePrecipitationGraph();
                     initializeTimeline();
                     initializeCloudCover();
-                    document.getElementById('error-message').style.display = 'none';
                     document.getElementById('loading-screen').style.display = 'none';
                     return;
                 }
                 
                 try {
-                    // First, try to fetch the latest filename from the latest-weather-file.txt
-                    const latestFilenameResponse = await fetch(`data/latest-weather-file.txt?t=${new Date().getTime()}`);
+                    // Use a timestamp to force a fresh request
+                    const timestamp = new Date().getTime();
+                    const response = await fetch(`data/weather.json?t=${timestamp}`);
                     
-                    let jsonFilename = 'weather.json'; // Default fallback
+                    console.log('Weather response status:', response.status);
                     
-                    if (latestFilenameResponse.ok) {
-                        // We got the latest filename
-                        const latestFilename = await latestFilenameResponse.text();
-                        jsonFilename = latestFilename.trim(); // Remove any whitespace
-                        console.log('Using latest weather file:', jsonFilename);
-                    } else {
-                        console.log('Using default weather file (latest filename not available)');
+                    if (!response.ok) {
+                        throw new Error(`Failed to load weather data: ${response.status} ${response.statusText}`);
                     }
                     
-                    // Now fetch the actual JSON data using the appropriate filename
-                    const weatherResponse = await fetch(`data/${jsonFilename}?t=${new Date().getTime()}`);
-                    
-                    if (!weatherResponse.ok) {
-                        throw new Error(`Failed to load weather data: ${weatherResponse.statusText}`);
-                    }
-                    
-                    const data = await weatherResponse.json();
+                    const data = await response.json();
+                    console.log('Weather data loaded:', data);
                     
                     // Check if there was an error in the data
                     if (data.error) {
