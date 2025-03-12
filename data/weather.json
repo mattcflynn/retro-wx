@@ -1,9 +1,9 @@
 {
   "current": {
-    "temp": 49.7
+    "temp": 49.9
   },
   "forecast": {
-    "high": 49.9,
+    "high": 50.7,
     "low": 44,
     "hourly": [
       {
@@ -106,10 +106,10 @@
       },
       {
         "hour": 14,
-        "temp": 49,
-        "chance": 30,
-        "amount": 0.012,
-        "cloudCover": 84
+        "temp": 51,
+        "chance": 0,
+        "amount": 0,
+        "cloudCover": 73.2
       },
       {
         "hour": 15,
@@ -176,5 +176,5 @@
       }
     ]
   },
-  "lastUpdated": "2025-03-12T21:16:28.176Z"
+  "lastUpdated": "2025-03-12T21:38:43.639Z"
 }
