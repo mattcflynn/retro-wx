@@ -18,7 +18,7 @@
             font-family: 'Courier New', monospace;
             line-height: 1.2;
             height: 100vh;
-            padding: 16px;
+            padding: 10px;
             display: flex;
             flex-direction: column;
         }
@@ -37,7 +37,7 @@
         header {
             display: flex;
             justify-content: space-between;
-            padding: 12px;
+            padding: 8px;
             border-bottom: 2px solid #ffffff;
         }
         
@@ -49,7 +49,7 @@
         #current-weather {
             display: flex;
             justify-content: space-between;
-            padding: 12px;
+            padding: 8px;
             border-bottom: 2px solid #ffffff;
         }
         
@@ -57,7 +57,7 @@
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            padding: 12px;
+            padding: 8px;
             position: relative;
         }
         
@@ -65,12 +65,30 @@
             margin-bottom: 20px; /* More space between header and graph */
         }
         
+        /* Add this with your layout styles (near #forecast-header) */
+        #forecast-header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        #forecast-header {
+            margin-bottom: 0; /* Remove any existing margin */
+        }
+
+        #last-updated {
+            text-align: right;
+            padding: 0;
+        }
+
         #graph-container {
             flex-grow: 1;
             position: relative;
             display: flex;
-            margin-bottom: 8px;
-            height: 300px;
+            margin-bottom: 6px; /* Reduced from 8px */
+            height: calc(100% - 85px); /* Dynamic height */
+            min-height: 150px; /* Minimum height */
         }
         
         #left-scale {
@@ -224,6 +242,12 @@
             font-size: 14px;
         }
         
+        /* Add this with your text style classes (after .small-text) */
+        .tiny-text {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
         /* CRT and retro effects */
         @keyframes flicker {
             0% { opacity: 0.99; }
@@ -409,6 +433,47 @@
             display: none;
             z-index: 1000;
         }
+
+        /* iPad-specific adjustments */
+    @media only screen 
+    and (min-device-width: 768px) 
+    and (max-device-width: 1024px) 
+    and (orientation: landscape) {
+        body {
+            padding: 5px;
+            overflow: hidden; /* Prevent scrolling */
+        }
+        
+        .large-text {
+            font-size: 22px;
+        }
+        
+        .medium-text {
+            font-size: 16px;
+        }
+        
+        .small-text {
+            font-size: 12px;
+        }
+        
+        #graph-container {
+            height: calc(100% - 80px);
+            min-height: 120px;
+        }
+        
+        header, #current-weather {
+            padding: 5px;
+        }
+        
+        #forecast-container {
+            padding: 5px;
+        }
+        
+        #forecast-header-container {
+            margin-bottom: 5px;
+        }
+    }
+
     </style>
 </head>
 <body>
@@ -445,7 +510,10 @@
         </div>
         
         <div id="forecast-container">
-            <div id="forecast-header" class="medium-text">PRECIPITATION FORECAST</div>
+            <div id="forecast-header-container">
+                <div id="forecast-header" class="medium-text">PRECIPITATION FORECAST</div>
+                <div id="last-updated" class="tiny-text">LAST UPDATED: WAITING FOR DATA...</div>
+            </div>
             <div id="error-message"></div>
             
             <div id="graph-container">
@@ -997,9 +1065,10 @@
                     weatherData = data;
                     
                     // Update timestamp if available
+                    // After setting weatherData = data, add:
                     if (weatherData.lastUpdated) {
                         const lastUpdate = new Date(weatherData.lastUpdated);
-                        console.log(`Weather data last updated: ${lastUpdate.toLocaleString()}`);
+                        document.getElementById('last-updated').textContent = `LAST UPDATED: ${lastUpdate.toLocaleString()}`;
                     }
                     
                 } catch (fetchError) {
