@@ -49,12 +49,23 @@ async function fetchWeatherData() {
     const processedData = processWeatherData(weatherData);
     
     // Add timestamp for debugging
-    processedData.lastUpdated = new Date().toISOString();
+    const timestamp = new Date().toISOString();
+    processedData.lastUpdated = timestamp;
     
-    // Save to file
+    // Create a timestamp-based filename (replacing colons and periods with underscores for compatibility)
+    const safeTimestamp = timestamp.replace(/[:.]/g, '_');
+    const timestampedOutputFile = path.join(dataDir, `weather-${safeTimestamp}.json`);
+    
+    // Save to both the regular file and the timestamped file
     fs.writeFileSync(outputFile, JSON.stringify(processedData, null, 2));
+    fs.writeFileSync(timestampedOutputFile, JSON.stringify(processedData, null, 2));
+    
+    // Create or update a file that contains the latest filename
+    const latestFilename = `weather-${safeTimestamp}.json`;
+    fs.writeFileSync(path.join(dataDir, 'latest-weather-file.txt'), latestFilename);
     
     console.log('Weather data saved successfully!');
+    console.log('Timestamped file created:', timestampedOutputFile);
     
   } catch (error) {
     console.error('Error fetching weather data:', error);

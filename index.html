@@ -1029,6 +1029,7 @@
         }
         
         // Fetch weather data from local JSON file (assumes GitHub Actions setup)
+        // This is the updated fetchWeatherData function to add to your index.html
         async function fetchWeatherData() {
             try {
                 document.getElementById('error-message').style.display = 'none';
@@ -1036,6 +1037,7 @@
                 
                 // Use demo data if enabled in settings
                 if (displaySettings.useDemoData) {
+                    console.log('Using demo data (by user setting)');
                     weatherData = JSON.parse(JSON.stringify(demoWeatherData)); // Deep copy
                     updateWeatherInfo();
                     initializePrecipitationGraph();
@@ -1047,15 +1049,28 @@
                 }
                 
                 try {
-                    // Fetch from the JSON file created by GitHub Actions
-                    const timestamp = new Date().getTime(); // Create a current timestamp
-                    const response = await fetch(`data/weather.json?t=${timestamp}`);
+                    // First, try to fetch the latest filename from the latest-weather-file.txt
+                    const latestFilenameResponse = await fetch(`data/latest-weather-file.txt?t=${new Date().getTime()}`);
                     
-                    if (!response.ok) {
-                        throw new Error(`Failed to load weather data: ${response.statusText}`);
+                    let jsonFilename = 'weather.json'; // Default fallback
+                    
+                    if (latestFilenameResponse.ok) {
+                        // We got the latest filename
+                        const latestFilename = await latestFilenameResponse.text();
+                        jsonFilename = latestFilename.trim(); // Remove any whitespace
+                        console.log('Using latest weather file:', jsonFilename);
+                    } else {
+                        console.log('Using default weather file (latest filename not available)');
                     }
                     
-                    const data = await response.json();
+                    // Now fetch the actual JSON data using the appropriate filename
+                    const weatherResponse = await fetch(`data/${jsonFilename}?t=${new Date().getTime()}`);
+                    
+                    if (!weatherResponse.ok) {
+                        throw new Error(`Failed to load weather data: ${weatherResponse.statusText}`);
+                    }
+                    
+                    const data = await weatherResponse.json();
                     
                     // Check if there was an error in the data
                     if (data.error) {
@@ -1065,10 +1080,10 @@
                     weatherData = data;
                     
                     // Update timestamp if available
-                    // After setting weatherData = data, add:
                     if (weatherData.lastUpdated) {
                         const lastUpdate = new Date(weatherData.lastUpdated);
                         document.getElementById('last-updated').textContent = `LAST UPDATED: ${lastUpdate.toLocaleString()}`;
+                        console.log(`Weather data timestamp: ${weatherData.lastUpdated}`);
                     }
                     
                 } catch (fetchError) {
