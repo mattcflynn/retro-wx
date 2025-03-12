@@ -1,4 +1,180 @@
 {
-  "error": "Failed to fetch weather data: Unauthorized",
-  "lastUpdated": "2025-03-12T17:14:24.763Z"
+  "current": {
+    "temp": 45.5
+  },
+  "forecast": {
+    "high": 49.9,
+    "low": 44,
+    "hourly": [
+      {
+        "hour": 0,
+        "temp": 48,
+        "chance": 0,
+        "amount": 0,
+        "cloudCover": 100
+      },
+      {
+        "hour": 1,
+        "temp": 47,
+        "chance": 0,
+        "amount": 0,
+        "cloudCover": 100
+      },
+      {
+        "hour": 2,
+        "temp": 47,
+        "chance": 0,
+        "amount": 0,
+        "cloudCover": 100
+      },
+      {
+        "hour": 3,
+        "temp": 47,
+        "chance": 0,
+        "amount": 0,
+        "cloudCover": 100
+      },
+      {
+        "hour": 4,
+        "temp": 47,
+        "chance": 0,
+        "amount": 0,
+        "cloudCover": 100
+      },
+      {
+        "hour": 5,
+        "temp": 47,
+        "chance": 100,
+        "amount": 0.007,
+        "cloudCover": 100
+      },
+      {
+        "hour": 6,
+        "temp": 47,
+        "chance": 100,
+        "amount": 0.004,
+        "cloudCover": 100
+      },
+      {
+        "hour": 7,
+        "temp": 47,
+        "chance": 100,
+        "amount": 0.007,
+        "cloudCover": 100
+      },
+      {
+        "hour": 8,
+        "temp": 46,
+        "chance": 100,
+        "amount": 0.029,
+        "cloudCover": 100
+      },
+      {
+        "hour": 9,
+        "temp": 46,
+        "chance": 100,
+        "amount": 0.024,
+        "cloudCover": 100
+      },
+      {
+        "hour": 10,
+        "temp": 47,
+        "chance": 100,
+        "amount": 0.072,
+        "cloudCover": 100
+      },
+      {
+        "hour": 11,
+        "temp": 46,
+        "chance": 39,
+        "amount": 0.004,
+        "cloudCover": 85
+      },
+      {
+        "hour": 12,
+        "temp": 48,
+        "chance": 31,
+        "amount": 0.012,
+        "cloudCover": 85
+      },
+      {
+        "hour": 13,
+        "temp": 49,
+        "chance": 36,
+        "amount": 0,
+        "cloudCover": 86
+      },
+      {
+        "hour": 14,
+        "temp": 49,
+        "chance": 30,
+        "amount": 0,
+        "cloudCover": 84
+      },
+      {
+        "hour": 15,
+        "temp": 50,
+        "chance": 25,
+        "amount": 0,
+        "cloudCover": 87
+      },
+      {
+        "hour": 16,
+        "temp": 49,
+        "chance": 32,
+        "amount": 0.012,
+        "cloudCover": 88
+      },
+      {
+        "hour": 17,
+        "temp": 49,
+        "chance": 49,
+        "amount": 0.004,
+        "cloudCover": 90
+      },
+      {
+        "hour": 18,
+        "temp": 49,
+        "chance": 71,
+        "amount": 0.02,
+        "cloudCover": 89
+      },
+      {
+        "hour": 19,
+        "temp": 46,
+        "chance": 69,
+        "amount": 0.02,
+        "cloudCover": 89
+      },
+      {
+        "hour": 20,
+        "temp": 45,
+        "chance": 72,
+        "amount": 0.02,
+        "cloudCover": 90
+      },
+      {
+        "hour": 21,
+        "temp": 45,
+        "chance": 83,
+        "amount": 0.031,
+        "cloudCover": 91
+      },
+      {
+        "hour": 22,
+        "temp": 44,
+        "chance": 64,
+        "amount": 0.059,
+        "cloudCover": 86
+      },
+      {
+        "hour": 23,
+        "temp": 44,
+        "chance": 55,
+        "amount": 0.012,
+        "cloudCover": 88
+      }
+    ]
+  },
+  "lastUpdated": "2025-03-12T17:25:22.790Z"
 }
