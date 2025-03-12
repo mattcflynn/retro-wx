@@ -99,10 +99,10 @@
       },
       {
         "hour": 13,
-        "temp": 50,
-        "chance": 0,
+        "temp": 49,
+        "chance": 36,
         "amount": 0,
-        "cloudCover": 100
+        "cloudCover": 86
       },
       {
         "hour": 14,
@@ -176,5 +176,5 @@
       }
     ]
   },
-  "lastUpdated": "2025-03-12T20:19:31.095Z"
+  "lastUpdated": "2025-03-12T20:05:20.204Z"
 }
