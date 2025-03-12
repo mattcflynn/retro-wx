@@ -27,6 +27,8 @@ jobs:
       
       - name: Fetch weather data
         run: node .github/scripts/fetch-weather.js
+        env:
+          VISUAL_CROSSING_API_KEY: ${{ secrets.VISUAL_CROSSING_API_KEY }}
         
       - name: Commit and push if data changed
         run: |
