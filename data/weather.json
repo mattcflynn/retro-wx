@@ -1,0 +1,180 @@
+{
+  "current": {
+    "temp": 47.5
+  },
+  "forecast": {
+    "high": 50.9,
+    "low": 40.6,
+    "hourly": [
+      {
+        "hour": 0,
+        "temp": 46,
+        "chance": 0,
+        "amount": 0,
+        "cloudCover": 100
+      },
+      {
+        "hour": 1,
+        "temp": 45,
+        "chance": 0,
+        "amount": 0,
+        "cloudCover": 91
+      },
+      {
+        "hour": 2,
+        "temp": 43,
+        "chance": 0,
+        "amount": 0,
+        "cloudCover": 44.7
+      },
+      {
+        "hour": 3,
+        "temp": 41,
+        "chance": 0,
+        "amount": 0,
+        "cloudCover": 68.5
+      },
+      {
+        "hour": 4,
+        "temp": 41,
+        "chance": 0,
+        "amount": 0,
+        "cloudCover": 95.7
+      },
+      {
+        "hour": 5,
+        "temp": 43,
+        "chance": 0,
+        "amount": 0,
+        "cloudCover": 100
+      },
+      {
+        "hour": 6,
+        "temp": 43,
+        "chance": 0,
+        "amount": 0,
+        "cloudCover": 100
+      },
+      {
+        "hour": 7,
+        "temp": 43,
+        "chance": 0,
+        "amount": 0,
+        "cloudCover": 100
+      },
+      {
+        "hour": 8,
+        "temp": 43,
+        "chance": 0,
+        "amount": 0,
+        "cloudCover": 100
+      },
+      {
+        "hour": 9,
+        "temp": 44,
+        "chance": 0,
+        "amount": 0,
+        "cloudCover": 100
+      },
+      {
+        "hour": 10,
+        "temp": 45,
+        "chance": 0,
+        "amount": 0,
+        "cloudCover": 100
+      },
+      {
+        "hour": 11,
+        "temp": 46,
+        "chance": 0,
+        "amount": 0,
+        "cloudCover": 100
+      },
+      {
+        "hour": 12,
+        "temp": 46,
+        "chance": 0,
+        "amount": 0,
+        "cloudCover": 100
+      },
+      {
+        "hour": 13,
+        "temp": 48,
+        "chance": 0,
+        "amount": 0,
+        "cloudCover": 100
+      },
+      {
+        "hour": 14,
+        "temp": 49,
+        "chance": 0,
+        "amount": 0,
+        "cloudCover": 100
+      },
+      {
+        "hour": 15,
+        "temp": 50,
+        "chance": 0,
+        "amount": 0,
+        "cloudCover": 100
+      },
+      {
+        "hour": 16,
+        "temp": 51,
+        "chance": 0,
+        "amount": 0,
+        "cloudCover": 100
+      },
+      {
+        "hour": 17,
+        "temp": 51,
+        "chance": 0,
+        "amount": 0,
+        "cloudCover": 100
+      },
+      {
+        "hour": 18,
+        "temp": 51,
+        "chance": 100,
+        "amount": 0.004,
+        "cloudCover": 100
+      },
+      {
+        "hour": 19,
+        "temp": 50,
+        "chance": 100,
+        "amount": 0.003,
+        "cloudCover": 100
+      },
+      {
+        "hour": 20,
+        "temp": 50,
+        "chance": 100,
+        "amount": 0.004,
+        "cloudCover": 100
+      },
+      {
+        "hour": 21,
+        "temp": 47,
+        "chance": 43,
+        "amount": 0,
+        "cloudCover": 90
+      },
+      {
+        "hour": 22,
+        "temp": 46,
+        "chance": 69,
+        "amount": 0,
+        "cloudCover": 90
+      },
+      {
+        "hour": 23,
+        "temp": 46,
+        "chance": 86,
+        "amount": 0,
+        "cloudCover": 100
+      }
+    ]
+  },
+  "lastUpdated": "2025-03-12T04:01:00.114Z"
+}

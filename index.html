@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Weather Display</title>
+    <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #000000;
+            color: #ffffff; /* Base color: white */
+            font-family: 'Courier New', monospace;
+            line-height: 1.2;
+            height: 100vh;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Layout */
+        #container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            border: 2px solid #ffffff;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px;
+            border-bottom: 2px solid #ffffff;
+        }
+        
+        #date-container {
+            text-align: center;
+            flex-grow: 1;
+        }
+        
+        #current-weather {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px;
+            border-bottom: 2px solid #ffffff;
+        }
+        
+        #forecast-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 12px;
+            position: relative;
+        }
+        
+        #forecast-header {
+            margin-bottom: 20px; /* More space between header and graph */
+        }
+        
+        #graph-container {
+            flex-grow: 1;
+            position: relative;
+            display: flex;
+            margin-bottom: 8px;
+            height: 300px;
+        }
+        
+        #left-scale {
+            width: 40px; /* Wider to fit full percentage text */
+            position: relative;
+            margin-right: 5px;
+        }
+        
+        #right-scale {
+            width: 40px;
+            position: relative;
+            margin-left: 5px;
+        }
+        
+        .scale-label {
+            position: absolute;
+            right: 2px;
+            transform: translateY(-50%);
+            font-size: 10px;
+            color: #4488ff; /* Blue for chance scale */
+        }
+        
+        .scale-label-right {
+            position: absolute;
+            left: 2px;
+            transform: translateY(-50%);
+            font-size: 10px;
+            color: #8844ff; /* Purple for amount scale */
+        }
+        
+        .scale-line {
+            position: absolute;
+            right: 0;
+            width: 4px;
+            height: 1px;
+            background-color: #4488ff;
+        }
+        
+        .scale-line-right {
+            position: absolute;
+            left: 0;
+            width: 4px;
+            height: 1px;
+            background-color: #8844ff;
+        }
+        
+        #graph {
+            flex-grow: 1;
+            position: relative;
+            border-left: 1px solid #333;
+            border-right: 1px solid #333;
+            padding-right: 16px; /* Add padding to create space */
+            box-sizing: border-box; /* Ensure padding is included in width calculations */
+        }
+        
+        #timeline-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        #left-spacer {
+            width: 40px;
+            margin-right: 5px;
+        }
+        
+        #right-spacer {
+            width: 40px;
+            margin-left: 5px;
+        }
+        
+        #timeline {
+            flex-grow: 1;
+            height: 20px;
+            position: relative;
+            padding: 0;
+            margin-top: 5px;
+            border-top: 1px solid #ffffff;
+        }
+        
+        .time-marker {
+            position: absolute;
+            top: 0;
+            text-align: center;
+            transform: translateX(-50%);
+            font-size: 12px;
+        }
+        
+        /* Precipitation graph styling */
+        .bar {
+            position: absolute;
+            bottom: 0;
+            width: 8px;
+            background-color: #4488ff; /* Blue for precipitation chance */
+        }
+        
+        .amount-bar {
+            position: absolute;
+            bottom: 0;
+            width: 8px;
+            background-color: #8844ff; /* Purple for precipitation amount */
+        }
+        
+        /* Temperature-specific colors */
+        .temp-cold {
+            color: #4488ff; /* Blue for cold */
+        }
+        
+        .temp-nice {
+            color: #44ff44; /* Green for nice */
+        }
+        
+        .temp-hot {
+            color: #ff8844; /* Orange for hot */
+        }
+        
+        /* Cloud cover section */
+        #cloud-container {
+            display: flex;
+            align-items: center;
+            margin-top: 5px;
+        }
+        
+        #cloud-cover {
+            flex-grow: 1;
+            height: 25px;
+            position: relative;
+            padding: 0;
+            margin-top: 5px;
+            border-top: 1px solid #ffffff;
+        }
+        
+        .cloud-marker {
+            position: absolute;
+            top: 5px;
+            text-align: center;
+            transform: translateX(-50%);
+            font-size: 18px;
+        }
+
+        /* Large text styles */
+        .large-text {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .medium-text {
+            font-size: 18px;
+        }
+        
+        .small-text {
+            font-size: 14px;
+        }
+        
+        /* CRT and retro effects */
+        @keyframes flicker {
+            0% { opacity: 0.99; }
+            5% { opacity: 0.96; }
+            10% { opacity: 0.97; }
+            15% { opacity: 0.98; }
+            20% { opacity: 0.99; }
+            25% { opacity: 1; }
+            30% { opacity: 0.98; }
+            35% { opacity: 0.99; }
+            40% { opacity: 0.98; }
+            45% { opacity: 0.97; }
+            50% { opacity: 0.98; }
+            55% { opacity: 0.99; }
+            60% { opacity: 0.97; }
+            65% { opacity: 0.98; }
+            70% { opacity: 0.97; }
+            75% { opacity: 0.96; }
+            80% { opacity: 0.98; }
+            85% { opacity: 0.99; }
+            90% { opacity: 0.97; }
+            95% { opacity: 0.98; }
+            100% { opacity: 0.99; }
+        }
+        
+        #crt-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+            z-index: 10;
+            opacity: 0.15;
+        }
+        
+        #flicker-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(18, 16, 16, 0.1);
+            opacity: 0;
+            z-index: 11;
+            pointer-events: none;
+            animation: flicker 0.3s infinite;
+        }
+        
+        /* Settings panels */
+        #settings-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #ffffff;
+            padding: 20px;
+            z-index: 1000;
+            width: 80%;
+            max-width: 500px;
+            display: none;
+        }
+        
+        #location-settings {
+            margin-bottom: 20px;
+        }
+        
+        #location-settings h2, #display-settings h2 {
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ffffff;
+            padding-bottom: 5px;
+        }
+        
+        .settings-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+        }
+        
+        .settings-row label {
+            flex: 1;
+        }
+        
+        .settings-row input, .settings-row select {
+            flex: 1;
+            background: #111;
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            padding: 5px;
+        }
+        
+        .settings-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .settings-buttons button {
+            background: #111;
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+        
+        .settings-buttons button:hover {
+            background: #333;
+        }
+        
+        #toggle-settings {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            padding: 5px;
+            cursor: pointer;
+            z-index: 101;
+        }
+        
+        /* Loading effect */
+        @keyframes loading {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        #loading-text {
+            margin-bottom: 20px;
+        }
+        
+        #loading-bar-container {
+            width: 80%;
+            max-width: 400px;
+            height: 20px;
+            border: 2px solid #ffffff;
+        }
+        
+        #loading-bar {
+            height: 100%;
+            width: 0%;
+            background-color: #ffffff;
+            animation: loading 3s forwards;
+        }
+        
+        /* Error message */
+        #error-message {
+            color: #ff4444;
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+        
+        /* Status message */
+        #status-message {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: none;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading screen -->
+    <div id="loading-screen">
+        <div id="loading-text" class="large-text">INITIALIZING WEATHER SYSTEM...</div>
+        <div id="loading-bar-container">
+            <div id="loading-bar"></div>
+        </div>
+    </div>
+    
+    <!-- CRT effects -->
+    <div id="crt-overlay"></div>
+    <div id="flicker-overlay"></div>
+    
+    <div id="container">
+        <header>
+            <div id="day-display" class="large-text">SUNDAY</div>
+            <div id="date-container">
+                <div id="date-display" class="medium-text">MARCH 09</div>
+            </div>
+            <div id="time-display" class="medium-text">12:00:00</div>
+        </header>
+        
+        <div id="current-weather">
+            <div>
+                <div id="current-temp" class="large-text temp-nice">46°F</div>
+            </div>
+            <div>
+                <div id="high-low" class="medium-text">
+                    <span class="temp-nice">HI: 52°F</span> / <span class="temp-cold">LO: 38°F</span>
+                </div>
+            </div>
+        </div>
+        
+        <div id="forecast-container">
+            <div id="forecast-header" class="medium-text">PRECIPITATION FORECAST</div>
+            <div id="error-message"></div>
+            
+            <div id="graph-container">
+                <!-- Left scale for precipitation chance -->
+                <div id="left-scale"></div>
+                
+                <!-- Main precipitation graph -->
+                <div id="graph"></div>
+                
+                <!-- Right scale for precipitation amount -->
+                <div id="right-scale"></div>
+            </div>
+            
+            <!-- Timeline with spacers to align with graph -->
+            <div id="timeline-container">
+                <div id="left-spacer"></div>
+                <div id="timeline"></div>
+                <div id="right-spacer"></div>
+            </div>
+            
+            <!-- Cloud cover with spacers to align with graph -->
+            <div id="cloud-container">
+                <div id="left-spacer"></div>
+                <div id="cloud-cover"></div>
+                <div id="right-spacer"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Settings Button -->
+    <button id="toggle-settings">⚙️</button>
+    
+    <!-- Settings Panel -->
+    <div id="settings-panel">
+        <div id="location-settings">
+            <h2>LOCATION SETTINGS</h2>
+            <div class="settings-row">
+                <label for="latitude">Latitude:</label>
+                <input type="number" id="latitude" step="0.0001" placeholder="45.5231">
+            </div>
+            <div class="settings-row">
+                <label for="longitude">Longitude:</label>
+                <input type="number" id="longitude" step="0.0001" placeholder="-122.6765">
+            </div>
+        </div>
+        
+        <div id="display-settings">
+            <h2>DISPLAY SETTINGS</h2>
+            <div class="settings-row">
+                <label for="toggle-crt-effect">CRT Effect:</label>
+                <input type="checkbox" id="toggle-crt-effect" checked>
+            </div>
+            <div class="settings-row">
+                <label for="toggle-flicker-effect">Flicker Effect:</label>
+                <input type="checkbox" id="toggle-flicker-effect" checked>
+            </div>
+            <div class="settings-row">
+                <label for="use-demo-data">Use Demo Data:</label>
+                <input type="checkbox" id="use-demo-data">
+            </div>
+        </div>
+        
+        <div class="settings-buttons">
+            <button id="save-settings">SAVE</button>
+            <button id="cancel-settings">CANCEL</button>
+        </div>
+    </div>
+    
+    <!-- Status Message -->
+    <div id="status-message"></div>
+    
+    <script>
+        // Default coordinates (Portland, OR)
+        let coordinates = {
+            latitude: 45.5231,
+            longitude: -122.6765
+        };
+        
+        // Display settings
+        let displaySettings = {
+            crtEffect: true,
+            flickerEffect: true,
+            useDemoData: false
+        };
+        
+        // Demo data for the display
+        const demoWeatherData = {
+            current: {
+                temp: 46
+            },
+            forecast: {
+                high: 52,
+                low: 38,
+                hourly: [
+                    { hour: 0, chance: 10, amount: 0, cloudCover: 25 },
+                    { hour: 1, chance: 20, amount: 0, cloudCover: 35 },
+                    { hour: 2, chance: 30, amount: 0, cloudCover: 45 },
+                    { hour: 3, chance: 50, amount: 0, cloudCover: 65 },
+                    { hour: 4, chance: 70, amount: 0.1, cloudCover: 75 },
+                    { hour: 5, chance: 80, amount: 0.2, cloudCover: 85 },
+                    { hour: 6, chance: 75, amount: 0.2, cloudCover: 90 },
+                    { hour: 7, chance: 60, amount: 0.1, cloudCover: 80 },
+                    { hour: 8, chance: 40, amount: 0, cloudCover: 60 },
+                    { hour: 9, chance: 30, amount: 0, cloudCover: 40 },
+                    { hour: 10, chance: 20, amount: 0, cloudCover: 25 },
+                    { hour: 11, chance: 10, amount: 0, cloudCover: 10 },
+                    { hour: 12, chance: 10, amount: 0, cloudCover: 0 },
+                    { hour: 13, chance: 20, amount: 0, cloudCover: 5 },
+                    { hour: 14, chance: 30, amount: 0, cloudCover: 15 },
+                    { hour: 15, chance: 40, amount: 0, cloudCover: 30 },
+                    { hour: 16, chance: 60, amount: 0.1, cloudCover: 55 },
+                    { hour: 17, chance: 70, amount: 0.2, cloudCover: 70 },
+                    { hour: 18, chance: 60, amount: 0.1, cloudCover: 80 },
+                    { hour: 19, chance: 40, amount: 0, cloudCover: 75 },
+                    { hour: 20, chance: 30, amount: 0, cloudCover: 60 },
+                    { hour: 21, chance: 20, amount: 0, cloudCover: 40 },
+                    { hour: 22, chance: 10, amount: 0, cloudCover: 25 },
+                    { hour: 23, chance: 5, amount: 0, cloudCover: 10 }
+                ]
+            }
+        };
+        
+        // Weather data object
+        let weatherData = {
+            current: {
+                temp: null
+            },
+            forecast: {
+                high: null,
+                low: null,
+                hourly: []
+            }
+        };
+        
+        // Temperature ranges for color-coding
+        const tempRanges = {
+            cold: { max: 50 },      // Below 50°F
+            nice: { min: 50, max: 75 }, // 50°F - 75°F
+            hot: { min: 75 }        // Above 75°F
+        };
+        
+        // Cloud cover symbols
+        const cloudSymbols = {
+            clear: "☼", // Sun symbol for clear (0-10%)
+            light: "░", // Light shade for light clouds (10-40%)
+            moderate: "▒", // Medium shade for moderate clouds (40-60%)
+            heavy: "▓", // Dark shade for heavy clouds (60-90%)
+            overcast: "█" // Full block for overcast (90-100%)
+        };
+        
+        // Initialize the application
+        function initializeApp() {
+            // Load saved settings
+            loadSettings();
+            
+            // Update the clock
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+            
+            // Set up event listeners
+            document.getElementById('toggle-settings').addEventListener('click', toggleSettingsPanel);
+            document.getElementById('save-settings').addEventListener('click', saveSettings);
+            document.getElementById('cancel-settings').addEventListener('click', closeSettingsPanel);
+            document.getElementById('toggle-crt-effect').addEventListener('change', updateEffects);
+            document.getElementById('toggle-flicker-effect').addEventListener('change', updateEffects);
+            document.getElementById('use-demo-data').addEventListener('change', function() {
+                displaySettings.useDemoData = this.checked;
+            });
+            
+            // Apply the current settings
+            applySettings();
+            
+            // Create the scales
+            initializeScales();
+            
+            // Fetch weather data
+            fetchWeatherData();
+            
+            // Refresh weather data every 30 minutes
+            setInterval(fetchWeatherData, 30 * 60 * 1000);
+        }
+        
+        // Update date and time
+        function updateDateTime() {
+            const now = new Date();
+            
+            // Format day of week - FULL NAME
+            const days = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
+            const day = days[now.getDay()];
+            
+            // Format date - FULL MONTH
+            const months = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
+            const month = months[now.getMonth()];
+            const date = now.getDate().toString().padStart(2, '0');
+            
+            // Format time
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            
+            // Update the display
+            document.getElementById('day-display').textContent = day;
+            document.getElementById('date-display').textContent = `${month} ${date}`;
+            document.getElementById('time-display').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+        
+        // Initialize the left and right scales
+        function initializeScales() {
+            // Precipitation chance scale (left side, blue)
+            const leftScale = document.getElementById('left-scale');
+            leftScale.innerHTML = '';
+            
+            // Add scale markers in 10% increments
+            for (let i = 0; i <= 100; i += 10) {
+                // Create line marker
+                const line = document.createElement('div');
+                line.className = 'scale-line';
+                line.style.top = `${100 - i}%`;
+                leftScale.appendChild(line);
+                
+                // Create label (only for every 20%)
+                if (i % 20 === 0 || i === 0 || i === 100) {
+                    const label = document.createElement('div');
+                    label.className = 'scale-label';
+                    label.textContent = `${i}%`;
+                    label.style.top = `${100 - i}%`;
+                    leftScale.appendChild(label);
+                }
+            }
+            
+            // Precipitation amount scale (right side, purple)
+            const rightScale = document.getElementById('right-scale');
+            rightScale.innerHTML = '';
+            
+            // Add scale markers in 0.1" increments
+            for (let i = 0; i <= 10; i++) {
+                const value = i / 10; // Convert to decimal (0.0, 0.1, 0.2, etc.)
+                
+                // Create line marker
+                const line = document.createElement('div');
+                line.className = 'scale-line-right';
+                line.style.top = `${100 - (value * 100)}%`;
+                rightScale.appendChild(line);
+                
+                // Create label (only for every 0.2")
+                if (i % 2 === 0 || i === 0 || i === 10) {
+                    const label = document.createElement('div');
+                    label.className = 'scale-label-right';
+                    label.textContent = `${value.toFixed(1)}"`;
+                    label.style.top = `${100 - (value * 100)}%`;
+                    rightScale.appendChild(label);
+                }
+            }
+        }
+        
+        // Toggle settings panel
+        function toggleSettingsPanel() {
+            const panel = document.getElementById('settings-panel');
+            if (panel.style.display === 'block') {
+                panel.style.display = 'none';
+            } else {
+                // Load current values into form
+                document.getElementById('latitude').value = coordinates.latitude;
+                document.getElementById('longitude').value = coordinates.longitude;
+                document.getElementById('toggle-crt-effect').checked = displaySettings.crtEffect;
+                document.getElementById('toggle-flicker-effect').checked = displaySettings.flickerEffect;
+                document.getElementById('use-demo-data').checked = displaySettings.useDemoData;
+                panel.style.display = 'block';
+            }
+        }
+        
+        // Close settings panel
+        function closeSettingsPanel() {
+            document.getElementById('settings-panel').style.display = 'none';
+        }
+        
+        // Save settings
+        function saveSettings() {
+            // Get values from form
+            const newLatitude = parseFloat(document.getElementById('latitude').value);
+            const newLongitude = parseFloat(document.getElementById('longitude').value);
+            
+            // Validate coordinates
+            if (isNaN(newLatitude) || isNaN(newLongitude) || 
+                newLatitude < -90 || newLatitude > 90 || 
+                newLongitude < -180 || newLongitude > 180) {
+                showStatus('Invalid coordinates. Please check your values.');
+                return;
+            }
+            
+            // Update coordinates if they changed
+            if (newLatitude !== coordinates.latitude || newLongitude !== coordinates.longitude) {
+                coordinates.latitude = newLatitude;
+                coordinates.longitude = newLongitude;
+                
+                // Refetch weather data with new coordinates
+                fetchWeatherData();
+            }
+            
+            // Update display settings
+            displaySettings.crtEffect = document.getElementById('toggle-crt-effect').checked;
+            displaySettings.flickerEffect = document.getElementById('toggle-flicker-effect').checked;
+            displaySettings.useDemoData = document.getElementById('use-demo-data').checked;
+            
+            // Apply settings
+            applySettings();
+            
+            // Save to localStorage
+            localStorage.setItem('weatherCoordinates', JSON.stringify(coordinates));
+            localStorage.setItem('weatherDisplaySettings', JSON.stringify(displaySettings));
+            
+            // Close panel
+            closeSettingsPanel();
+            
+            // Show confirmation
+            showStatus('Settings saved successfully!');
+        }
+        
+        // Load settings from localStorage
+        function loadSettings() {
+            const savedCoordinates = localStorage.getItem('weatherCoordinates');
+            if (savedCoordinates) {
+                coordinates = JSON.parse(savedCoordinates);
+            }
+            
+            const savedDisplaySettings = localStorage.getItem('weatherDisplaySettings');
+            if (savedDisplaySettings) {
+                displaySettings = JSON.parse(savedDisplaySettings);
+            }
+        }
+        
+        // Apply current settings
+        function applySettings() {
+            // Apply CRT effect setting
+            document.getElementById('crt-overlay').style.display = displaySettings.crtEffect ? 'block' : 'none';
+            
+            // Apply flicker effect setting
+            document.getElementById('flicker-overlay').style.display = displaySettings.flickerEffect ? 'block' : 'none';
+        }
+        
+        // Update effects based on toggle changes
+        function updateEffects() {
+            displaySettings.crtEffect = document.getElementById('toggle-crt-effect').checked;
+            displaySettings.flickerEffect = document.getElementById('toggle-flicker-effect').checked;
+            applySettings();
+        }
+        
+        // Show status message
+        function showStatus(message) {
+            const statusEl = document.getElementById('status-message');
+            statusEl.textContent = message;
+            statusEl.style.display = 'block';
+            
+            // Hide after 3 seconds
+            setTimeout(() => {
+                statusEl.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Get temperature class based on value
+        function getTempClass(temp) {
+            if (temp < tempRanges.cold.max) return 'temp-cold';
+            if (temp >= tempRanges.nice.min && temp <= tempRanges.nice.max) return 'temp-nice';
+            if (temp > tempRanges.hot.min) return 'temp-hot';
+            return '';
+        }
+        
+        // Get cloud symbol based on cloud cover percentage
+        function getCloudSymbol(cloudCover) {
+            if (cloudCover < 10) return cloudSymbols.clear;
+            if (cloudCover < 40) return cloudSymbols.light;
+            if (cloudCover < 60) return cloudSymbols.moderate;
+            if (cloudCover < 90) return cloudSymbols.heavy;
+            return cloudSymbols.overcast;
+        }
+        
+        // Update weather information display
+        function updateWeatherInfo() {
+            // Check if we have data
+            if (!weatherData.current.temp) {
+                return;
+            }
+            
+            const currentTemp = weatherData.current.temp;
+            const highTemp = weatherData.forecast.high;
+            const lowTemp = weatherData.forecast.low;
+            
+            // Update current temperature with appropriate class
+            const currentTempEl = document.getElementById('current-temp');
+            currentTempEl.textContent = `${Math.round(currentTemp)}°F`;
+            currentTempEl.className = `large-text ${getTempClass(currentTemp)}`;
+            
+            // Update high/low with appropriate classes
+            const highLowEl = document.getElementById('high-low');
+            highLowEl.innerHTML = `<span class="${getTempClass(highTemp)}">HI: ${Math.round(highTemp)}°F</span> / <span class="${getTempClass(lowTemp)}">LO: ${Math.round(lowTemp)}°F</span>`;
+        }
+        
+        // Initialize the precipitation graph
+        function initializePrecipitationGraph() {
+            const graph = document.getElementById('graph');
+            const graphWidth = graph.clientWidth - 16; // Subtract the padding we added
+            const graphHeight = graph.offsetHeight;
+            
+            // Clear previous graph
+            graph.innerHTML = '';
+            
+            // Check if we have data
+            if (!weatherData.forecast.hourly.length) {
+                return;
+            }
+            
+            // Get the first 24 hours of data
+            const hourlyData = weatherData.forecast.hourly.slice(0, 24);
+            
+            // When calculating positions, ensure the last column has proper clearance
+            const maxPosition = graphWidth - 10; // Reserve 10px from right edge
+            const barWidth = Math.min((graphWidth / 24), (maxPosition / 23)); // Ensure bars don't exceed max
+            
+            // Create bars for each hour (midnight to midnight - 24 hours)
+            hourlyData.forEach((hour, index) => {
+                // Chance of precipitation bar
+                if (hour.chance > 0) {
+                    const bar = document.createElement('div');
+                    bar.className = 'bar';
+                    bar.style.height = `${Math.max(5, hour.chance)}%`;
+                    // Position the bar with adjusted width
+                    bar.style.left = `${index * barWidth + (barWidth/2) - 3}px`;
+                    bar.style.width = `${Math.max(3, barWidth - 3)}px`;
+                    graph.appendChild(bar);
+                }
+                
+                // Amount of precipitation bar (if any)
+                if (hour.amount > 0) {
+                    const amountBar = document.createElement('div');
+                    amountBar.className = 'amount-bar';
+                    // Scale amount: 0.1" = 10%, 1" = 100% (max 1" per hour)
+                    const heightPercent = Math.min(100, hour.amount * 100);
+                    amountBar.style.height = `${Math.max(5, heightPercent)}%`;
+                    // Position the amount bar with adjusted width
+                    amountBar.style.left = `${index * barWidth + (barWidth/2) - 3}px`;
+                    amountBar.style.width = `${Math.max(3, barWidth - 3)}px`;
+                    graph.appendChild(amountBar);
+                }
+            });
+        }
+        
+        // Initialize the timeline with perfectly aligned hour markers in 12-hour format
+        function initializeTimeline() {
+            const timeline = document.getElementById('timeline');
+            const width = timeline.offsetWidth;
+            
+            // Clear previous timeline
+            timeline.innerHTML = '';
+            
+            // Show hours at 3-hour intervals but in 12-hour format
+            const hours = [0, 3, 6, 9, 12, 15, 18, 21];
+            const columnWidth = width / 24;
+            
+            hours.forEach(hour => {
+                const marker = document.createElement('div');
+                marker.className = 'time-marker small-text';
+                
+                // Convert to 12-hour format with AM/PM
+                let displayHour = hour % 12;
+                if (displayHour === 0) displayHour = 12; // 0 should display as 12
+                const ampm = hour < 12 ? 'AM' : 'PM';
+                marker.textContent = `${displayHour}${ampm}`;
+                
+                // Position exactly at the hour's column
+                marker.style.left = `${(hour * columnWidth) + (columnWidth/2)}px`;
+                marker.style.top = '5px';
+                
+                timeline.appendChild(marker);
+            });
+        }
+        
+        // Initialize the cloud cover display
+        function initializeCloudCover() {
+            const cloudCover = document.getElementById('cloud-cover');
+            const width = cloudCover.offsetWidth;
+            
+            // Clear previous cloud cover indicators
+            cloudCover.innerHTML = '';
+            
+            // Check if we have data
+            if (!weatherData.forecast.hourly.length) {
+                return;
+            }
+            
+            // Get the first 24 hours of data
+            const hourlyData = weatherData.forecast.hourly.slice(0, 24);
+            
+            // Show cloud cover at 3-hour intervals
+            const hours = [0, 3, 6, 9, 12, 15, 18, 21];
+            const columnWidth = width / 24;
+            
+            hours.forEach(hour => {
+                // Get the cloud cover percentage for this hour
+                if (hourlyData[hour]) {
+                    const cloudPercentage = hourlyData[hour].cloudCover;
+                    
+                    // Create the cloud cover marker
+                    const marker = document.createElement('div');
+                    marker.className = 'cloud-marker';
+                    marker.textContent = getCloudSymbol(cloudPercentage);
+                    
+                    // Position exactly at the hour's column
+                    marker.style.left = `${(hour * columnWidth) + (columnWidth/2)}px`;
+                    
+                    cloudCover.appendChild(marker);
+                }
+            });
+        }
+        
+        // Fetch weather data from local JSON file (assumes GitHub Actions setup)
+        async function fetchWeatherData() {
+            try {
+                document.getElementById('error-message').style.display = 'none';
+                document.getElementById('loading-screen').style.display = 'flex';
+                
+                // Use demo data if enabled in settings
+                if (displaySettings.useDemoData) {
+                    weatherData = JSON.parse(JSON.stringify(demoWeatherData)); // Deep copy
+                    updateWeatherInfo();
+                    initializePrecipitationGraph();
+                    initializeTimeline();
+                    initializeCloudCover();
+                    document.getElementById('error-message').style.display = 'none';
+                    document.getElementById('loading-screen').style.display = 'none';
+                    return;
+                }
+                
+                try {
+                    // Fetch from the JSON file created by GitHub Actions
+                    const response = await fetch('data/weather.json');
+                    
+                    if (!response.ok) {
+                        throw new Error(`Failed to load weather data: ${response.statusText}`);
+                    }
+                    
+                    const data = await response.json();
+                    
+                    // Check if there was an error in the data
+                    if (data.error) {
+                        throw new Error(data.error);
+                    }
+                    
+                    weatherData = data;
+                    
+                    // Update timestamp if available
+                    if (weatherData.lastUpdated) {
+                        const lastUpdate = new Date(weatherData.lastUpdated);
+                        console.log(`Weather data last updated: ${lastUpdate.toLocaleString()}`);
+                    }
+                    
+                } catch (fetchError) {
+                    console.error('Error fetching JSON, using demo data:', fetchError);
+                    
+                    // If fetch fails, use demo data as fallback
+                    weatherData = JSON.parse(JSON.stringify(demoWeatherData)); // Deep copy
+                    
+                    // Show error if it's not from first load
+                    if (weatherData.current.temp !== null) {
+                        document.getElementById('error-message').textContent = `Error: ${fetchError.message || 'Failed to fetch weather data'}. Using demo data.`;
+                        document.getElementById('error-message').style.display = 'block';
+                    }
+                }
+                
+                // Update the display
+                updateWeatherInfo();
+                initializePrecipitationGraph();
+                initializeTimeline();
+                initializeCloudCover();
+                
+                // Hide loading screen
+                document.getElementById('loading-screen').style.display = 'none';
+                
+            } catch (error) {
+                console.error('Error updating weather display:', error);
+                document.getElementById('loading-screen').style.display = 'none';
+                
+                // If we failed, use demo data
+                if (!weatherData.current.temp) { // Only if we don't already have data
+                    weatherData = JSON.parse(JSON.stringify(demoWeatherData)); // Deep copy
+                    updateWeatherInfo();
+                    initializePrecipitationGraph();
+                    initializeTimeline();
+                    initializeCloudCover();
+                }
+                
+                document.getElementById('error-message').textContent = `Error: ${error.message || 'Failed to update weather display'}. Using demo data.`;
+                document.getElementById('error-message').style.display = 'block';
+            }
+        }
+        
+        // Handle window resize
+        function handleResize() {
+            initializeScales();
+            initializePrecipitationGraph();
+            initializeTimeline();
+            initializeCloudCover();
+        }
+        
+        // Call the initialization function when the page loads
+        window.addEventListener('load', initializeApp);
+        
+        // Update the display when the window is resized
+        window.addEventListener('resize', handleResize);
+    </script>
+</body>
+</html>
