@@ -1,6 +1,6 @@
 {
   "current": {
-    "temp": 44.6
+    "temp": 41.7
   },
   "forecast": {
     "high": 47.5,
@@ -113,10 +113,10 @@
       },
       {
         "hour": 15,
-        "temp": 44,
-        "chance": 83,
-        "amount": 0.012,
-        "cloudCover": 89
+        "temp": 46,
+        "chance": 100,
+        "amount": 0.003,
+        "cloudCover": 60.6
       },
       {
         "hour": 16,
@@ -176,5 +176,5 @@
       }
     ]
   },
-  "lastUpdated": "2025-03-13T22:16:04.963Z"
+  "lastUpdated": "2025-03-13T22:39:14.799Z"
 }
