@@ -1,6 +1,6 @@
 {
   "current": {
-    "temp": 41.9
+    "temp": 41
   },
   "forecast": {
     "high": 45,
@@ -24,14 +24,14 @@
         "hour": 2,
         "temp": 41,
         "chance": 60,
-        "amount": 0.059,
+        "amount": 0.071,
         "cloudCover": 73
       },
       {
         "hour": 3,
         "temp": 40,
         "chance": 48,
-        "amount": 0.039,
+        "amount": 0.051,
         "cloudCover": 76
       },
       {
@@ -52,7 +52,7 @@
         "hour": 6,
         "temp": 39,
         "chance": 42,
-        "amount": 0,
+        "amount": 0.012,
         "cloudCover": 62
       },
       {
@@ -87,14 +87,14 @@
         "hour": 11,
         "temp": 43,
         "chance": 60,
-        "amount": 0.02,
+        "amount": 0,
         "cloudCover": 73
       },
       {
         "hour": 12,
         "temp": 43,
         "chance": 90,
-        "amount": 0.012,
+        "amount": 0.02,
         "cloudCover": 94
       },
       {
@@ -115,14 +115,14 @@
         "hour": 15,
         "temp": 44,
         "chance": 66,
-        "amount": 0,
+        "amount": 0.012,
         "cloudCover": 78
       },
       {
         "hour": 16,
         "temp": 45,
         "chance": 47,
-        "amount": 0.012,
+        "amount": 0.02,
         "cloudCover": 65
       },
       {
@@ -176,5 +176,5 @@
       }
     ]
   },
-  "lastUpdated": "2025-03-13T08:23:57.398Z"
+  "lastUpdated": "2025-03-13T08:44:55.189Z"
 }
