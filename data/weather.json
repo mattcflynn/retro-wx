@@ -15,10 +15,10 @@
       },
       {
         "hour": 1,
-        "temp": 42,
-        "chance": 85,
-        "amount": 0.059,
-        "cloudCover": 90
+        "temp": 43,
+        "chance": 100,
+        "amount": 0.027,
+        "cloudCover": 100
       },
       {
         "hour": 2,
@@ -176,5 +176,5 @@
       }
     ]
   },
-  "lastUpdated": "2025-03-13T07:36:19.165Z"
+  "lastUpdated": "2025-03-13T08:23:57.398Z"
 }
