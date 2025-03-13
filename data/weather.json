@@ -1,6 +1,6 @@
 {
   "current": {
-    "temp": 46.5
+    "temp": 46.1
   },
   "forecast": {
     "high": 52.4,
@@ -141,40 +141,40 @@
       },
       {
         "hour": 19,
-        "temp": 46,
-        "chance": 78,
-        "amount": 0.031,
-        "cloudCover": 90
+        "temp": 48,
+        "chance": 100,
+        "amount": 0.017,
+        "cloudCover": 100
       },
       {
         "hour": 20,
         "temp": 45,
         "chance": 73,
-        "amount": 0.012,
+        "amount": 0.031,
         "cloudCover": 90
       },
       {
         "hour": 21,
         "temp": 45,
         "chance": 92,
-        "amount": 0.02,
+        "amount": 0.039,
         "cloudCover": 95
       },
       {
         "hour": 22,
         "temp": 44,
         "chance": 91,
-        "amount": 0.031,
+        "amount": 0.039,
         "cloudCover": 94
       },
       {
         "hour": 23,
         "temp": 43,
         "chance": 90,
-        "amount": 0.067,
+        "amount": 0.138,
         "cloudCover": 94
       }
     ]
   },
-  "lastUpdated": "2025-03-13T02:18:17.887Z"
+  "lastUpdated": "2025-03-13T02:43:14.818Z"
 }
