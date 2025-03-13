@@ -1,10 +1,10 @@
 {
   "current": {
-    "temp": 39.9
+    "temp": 39.7
   },
   "forecast": {
     "high": 45,
-    "low": 36.9,
+    "low": 38,
     "hourly": [
       {
         "hour": 0,
@@ -57,124 +57,124 @@
       },
       {
         "hour": 7,
-        "temp": 38,
-        "chance": 28,
+        "temp": 41,
+        "chance": 0,
         "amount": 0,
-        "cloudCover": 64
+        "cloudCover": 92.3
       },
       {
         "hour": 8,
-        "temp": 37,
-        "chance": 24,
-        "amount": 0,
+        "temp": 38,
+        "chance": 23,
+        "amount": 0.012,
         "cloudCover": 57
       },
       {
         "hour": 9,
         "temp": 39,
-        "chance": 25,
+        "chance": 31,
         "amount": 0,
         "cloudCover": 54
       },
       {
         "hour": 10,
-        "temp": 40,
-        "chance": 24,
+        "temp": 41,
+        "chance": 47,
         "amount": 0,
         "cloudCover": 65
       },
       {
         "hour": 11,
-        "temp": 43,
-        "chance": 60,
+        "temp": 42,
+        "chance": 48,
         "amount": 0,
         "cloudCover": 65
       },
       {
         "hour": 12,
-        "temp": 43,
-        "chance": 90,
+        "temp": 42,
+        "chance": 62,
         "amount": 0,
         "cloudCover": 75
       },
       {
         "hour": 13,
-        "temp": 44,
-        "chance": 90,
+        "temp": 43,
+        "chance": 78,
         "amount": 0.012,
         "cloudCover": 86
       },
       {
         "hour": 14,
         "temp": 44,
-        "chance": 79,
-        "amount": 0.02,
+        "chance": 85,
+        "amount": 0.051,
         "cloudCover": 90
       },
       {
         "hour": 15,
         "temp": 44,
-        "chance": 66,
+        "chance": 83,
         "amount": 0.012,
         "cloudCover": 89
       },
       {
         "hour": 16,
         "temp": 45,
-        "chance": 47,
-        "amount": 0.02,
+        "chance": 71,
+        "amount": 0,
         "cloudCover": 81
       },
       {
         "hour": 17,
         "temp": 44,
-        "chance": 83,
+        "chance": 63,
         "amount": 0,
         "cloudCover": 76
       },
       {
         "hour": 18,
         "temp": 44,
-        "chance": 83,
+        "chance": 51,
         "amount": 0,
         "cloudCover": 67
       },
       {
         "hour": 19,
         "temp": 42,
-        "chance": 83,
+        "chance": 43,
         "amount": 0,
         "cloudCover": 62
       },
       {
         "hour": 20,
         "temp": 40,
-        "chance": 83,
+        "chance": 33,
         "amount": 0,
         "cloudCover": 55
       },
       {
         "hour": 21,
         "temp": 39,
-        "chance": 83,
+        "chance": 26,
         "amount": 0,
         "cloudCover": 51
       },
       {
         "hour": 22,
         "temp": 38,
-        "chance": 83,
+        "chance": 24,
         "amount": 0,
         "cloudCover": 52
       },
       {
         "hour": 23,
         "temp": 38,
-        "chance": 63,
+        "chance": 47,
         "amount": 0,
         "cloudCover": 65
       }
     ]
   },
-  "lastUpdated": "2025-03-13T14:17:00.008Z"
+  "lastUpdated": "2025-03-13T14:41:22.003Z"
 }
