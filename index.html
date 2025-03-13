@@ -1030,6 +1030,7 @@
         
         // Fetch weather data from local JSON file (assumes GitHub Actions setup)
         // This is the updated fetchWeatherData function to add to your index.html
+        // Fetch weather data from local JSON file (assumes GitHub Actions setup)
         async function fetchWeatherData() {
             try {
                 document.getElementById('error-message').style.display = 'none';
@@ -1048,9 +1049,20 @@
                 }
                 
                 try {
-                    // Use a timestamp to force a fresh request
+                    // More aggressive cache busting
                     const timestamp = new Date().getTime();
-                    const response = await fetch(`data/weather.json?t=${timestamp}`);
+                    const randomNum = Math.floor(Math.random() * 1000000);
+                    const url = `data/weather.json?t=${timestamp}&r=${randomNum}`;
+                    console.log('Fetching from URL:', url);
+                    
+                    const response = await fetch(url, {
+                        cache: 'no-store',
+                        headers: {
+                            'Cache-Control': 'no-cache, no-store, must-revalidate',
+                            'Pragma': 'no-cache',
+                            'Expires': '0'
+                        }
+                    });
                     
                     console.log('Weather response status:', response.status);
                     
@@ -1060,6 +1072,7 @@
                     
                     const data = await response.json();
                     console.log('Weather data loaded:', data);
+                    console.log('Weather data timestamp:', data.lastUpdated);
                     
                     // Check if there was an error in the data
                     if (data.error) {
