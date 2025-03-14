@@ -1029,8 +1029,6 @@
         }
         
         // Fetch weather data from local JSON file (assumes GitHub Actions setup)
-        // This is the updated fetchWeatherData function to add to your index.html
-        // Fetch weather data from local JSON file (assumes GitHub Actions setup)
         async function fetchWeatherData() {
             try {
                 document.getElementById('error-message').style.display = 'none';
@@ -1149,6 +1147,12 @@
                 document.getElementById('error-message').style.display = 'block';
             }
         }
+        
+        // Initialize the application when the DOM has loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM fully loaded, initializing app...');
+            initializeApp();
+        });
     </script>
 </body>
 </html>
