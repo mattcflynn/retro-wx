@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App Tests</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        
+        .iframe-container {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            height: 500px;
+            overflow: hidden;
+        }
+        
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .test-controls {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .test-output {
+            background: #000;
+            color: #00ff00;
+            border-radius: 4px;
+            padding: 20px;
+            font-family: monospace;
+            height: 400px;
+            overflow-y: auto;
+        }
+        
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        
+        button:hover {
+            background: #45a049;
+        }
+        
+        .success {
+            color: #4CAF50;
+        }
+        
+        .error {
+            color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Weather Application Test Suite</h1>
+        
+        <div class="iframe-container">
+            <iframe id="app-frame" src="index.html"></iframe>
+        </div>
+        
+        <div class="test-controls">
+            <button id="run-tests">Run Tests</button>
+            <button id="clear-output">Clear Output</button>
+        </div>
+        
+        <div class="test-output" id="test-output"></div>
+    </div>
+    
+    <script>
+        // Wait for iframe to load
+        document.getElementById('app-frame').onload = function() {
+            console.log('App iframe loaded');
+        };
+        
+        // Override console methods to capture in our output div
+        const originalConsole = {
+            log: console.log,
+            error: console.error,
+            warn: console.warn,
+            info: console.info
+        };
+        
+        const testOutput = document.getElementById('test-output');
+        
+        function appendToOutput(message, type = 'log') {
+            // Keep original console behavior
+            originalConsole[type](message);
+            
+            // Format based on message content
+            let formattedMessage = message;
+            
+            if (typeof message === 'object') {
+                try {
+                    formattedMessage = JSON.stringify(message, null, 2);
+                } catch (e) {
+                    formattedMessage = message.toString();
+                }
+            }
+            
+            // Style based on message content
+            let className = '';
+            if (formattedMessage.includes('✅ PASS:')) {
+                className = 'success';
+            } else if (formattedMessage.includes('❌ FAIL:')) {
+                className = 'error';
+            }
+            
+            // Add new line
+            const line = document.createElement('div');
+            line.textContent = formattedMessage;
+            if (className) {
+                line.className = className;
+            }
+            
+            testOutput.appendChild(line);
+            testOutput.scrollTop = testOutput.scrollHeight;
+        }
+        
+        // Button to run tests
+        document.getElementById('run-tests').addEventListener('click', function() {
+            testOutput.innerHTML = '';
+            appendToOutput('Starting tests...');
+            
+            // Get iframe window
+            const appWindow = document.getElementById('app-frame').contentWindow;
+            
+            // Override console in iframe
+            appWindow.console.log = (message) => appendToOutput(message, 'log');
+            appWindow.console.error = (message) => appendToOutput(message, 'error');
+            appWindow.console.warn = (message) => appendToOutput(message, 'warn');
+            appWindow.console.info = (message) => appendToOutput(message, 'info');
+            
+            // Inject test script into iframe
+            const script = appWindow.document.createElement('script');
+            script.src = 'tests.js';
+            appWindow.document.body.appendChild(script);
+        });
+        
+        // Button to clear output
+        document.getElementById('clear-output').addEventListener('click', function() {
+            testOutput.innerHTML = '';
+        });
+    </script>
+</body>
+</html> 
