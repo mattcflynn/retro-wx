@@ -1068,7 +1068,9 @@
                         throw new Error(`Failed to load latest filename: ${filenameResponse.status} ${filenameResponse.statusText}`);
                     }
                     
-                    const latestFilename = (await filenameResponse.text()).trim();
+                    // Get and clean the filename (remove any trailing characters)
+                    let latestFilename = await filenameResponse.text();
+                    latestFilename = latestFilename.trim();
                     console.log('Latest weather file:', latestFilename);
                     
                     // Now fetch the actual weather data from the timestamped file
