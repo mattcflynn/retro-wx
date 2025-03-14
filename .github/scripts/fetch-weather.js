@@ -62,7 +62,7 @@ async function fetchWeatherData() {
     
     // Create or update a file that contains the latest filename
     const latestFilename = `weather-${safeTimestamp}.json`;
-    fs.writeFileSync(path.join(dataDir, 'latest-weather-file.txt'), latestFilename);
+    fs.writeFileSync(path.join(dataDir, 'latest-weather-file.txt'), latestFilename, 'utf-8');
     
     console.log('Weather data saved successfully!');
     console.log('Timestamped file created:', timestampedOutputFile);
