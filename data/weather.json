@@ -1,10 +1,10 @@
 {
   "current": {
-    "temp": 44.1
+    "temp": 39.8
   },
   "forecast": {
     "high": 47.5,
-    "low": 38,
+    "low": 36.9,
     "hourly": [
       {
         "hour": 0,
@@ -106,75 +106,75 @@
       },
       {
         "hour": 14,
-        "temp": 44,
-        "chance": 85,
-        "amount": 0.031,
-        "cloudCover": 90
+        "temp": 46,
+        "chance": 100,
+        "amount": 0.017,
+        "cloudCover": 77.4
       },
       {
         "hour": 15,
-        "temp": 44,
-        "chance": 83,
-        "amount": 0.012,
-        "cloudCover": 89
+        "temp": 46,
+        "chance": 100,
+        "amount": 0.003,
+        "cloudCover": 60.6
       },
       {
         "hour": 16,
         "temp": 45,
-        "chance": 71,
-        "amount": 0,
-        "cloudCover": 81
+        "chance": 100,
+        "amount": 0.034,
+        "cloudCover": 77.4
       },
       {
         "hour": 17,
-        "temp": 44,
-        "chance": 63,
+        "temp": 45,
+        "chance": 0,
         "amount": 0,
-        "cloudCover": 76
+        "cloudCover": 78.5
       },
       {
         "hour": 18,
-        "temp": 44,
-        "chance": 51,
-        "amount": 0,
-        "cloudCover": 67
+        "temp": 46,
+        "chance": 100,
+        "amount": 0.016,
+        "cloudCover": 92.3
       },
       {
         "hour": 19,
-        "temp": 42,
-        "chance": 43,
-        "amount": 0,
-        "cloudCover": 62
+        "temp": 44,
+        "chance": 100,
+        "amount": 0.029,
+        "cloudCover": 77.4
       },
       {
         "hour": 20,
-        "temp": 40,
-        "chance": 33,
-        "amount": 0,
-        "cloudCover": 55
+        "temp": 42,
+        "chance": 100,
+        "amount": 0.029,
+        "cloudCover": 67.6
       },
       {
         "hour": 21,
         "temp": 39,
-        "chance": 26,
+        "chance": 28,
         "amount": 0,
-        "cloudCover": 51
+        "cloudCover": 56
       },
       {
         "hour": 22,
         "temp": 38,
-        "chance": 24,
+        "chance": 18,
         "amount": 0,
-        "cloudCover": 52
+        "cloudCover": 53
       },
       {
         "hour": 23,
-        "temp": 38,
-        "chance": 47,
-        "amount": 0.016,
-        "cloudCover": 65
+        "temp": 37,
+        "chance": 29,
+        "amount": 0.008,
+        "cloudCover": 73
       }
     ]
   },
-  "lastUpdated": "2025-03-13T20:39:19.896Z"
+  "lastUpdated": "2025-03-14T03:49:01.180Z"
 }
