@@ -8,8 +8,8 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-  
-  # Add trigger from weather update
+
+  # Add this new trigger
   repository_dispatch:
     types: [trigger-static-deploy]
 

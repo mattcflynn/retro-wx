@@ -1049,16 +1049,36 @@
                 }
                 
                 try {
-                    // More aggressive cache busting
+                    // First, fetch the latest filename with cache busting
                     const timestamp = new Date().getTime();
                     const randomNum = Math.floor(Math.random() * 1000000);
-                    const url = `data/weather.json?t=${timestamp}&r=${randomNum}`;
-                    console.log('Fetching from URL:', url);
+                    const latestFileUrl = `data/latest-weather-file.txt?t=${timestamp}&r=${randomNum}`;
+                    console.log('Fetching latest filename from:', latestFileUrl);
                     
-                    const response = await fetch(url, {
+                    const filenameResponse = await fetch(latestFileUrl, {
                         cache: 'no-store',
                         headers: {
-                            'Cache-Control': 'no-cache, no-store, must-revalidate',
+                            'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
+                            'Pragma': 'no-cache',
+                            'Expires': '0'
+                        }
+                    });
+                    
+                    if (!filenameResponse.ok) {
+                        throw new Error(`Failed to load latest filename: ${filenameResponse.status} ${filenameResponse.statusText}`);
+                    }
+                    
+                    const latestFilename = (await filenameResponse.text()).trim();
+                    console.log('Latest weather file:', latestFilename);
+                    
+                    // Now fetch the actual weather data from the timestamped file
+                    const weatherFileUrl = `data/${latestFilename}?t=${timestamp}&r=${randomNum}`;
+                    console.log('Fetching weather data from:', weatherFileUrl);
+                    
+                    const response = await fetch(weatherFileUrl, {
+                        cache: 'no-store',
+                        headers: {
+                            'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
                             'Pragma': 'no-cache',
                             'Expires': '0'
                         }
@@ -1127,20 +1147,6 @@
                 document.getElementById('error-message').style.display = 'block';
             }
         }
-        
-        // Handle window resize
-        function handleResize() {
-            initializeScales();
-            initializePrecipitationGraph();
-            initializeTimeline();
-            initializeCloudCover();
-        }
-        
-        // Call the initialization function when the page loads
-        window.addEventListener('load', initializeApp);
-        
-        // Update the display when the window is resized
-        window.addEventListener('resize', handleResize);
     </script>
 </body>
 </html>

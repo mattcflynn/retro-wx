@@ -12,7 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      actions: write
     
     steps:
       - name: Checkout repository
@@ -44,4 +43,4 @@ jobs:
         uses: peter-evans/repository-dispatch@v2
         with:
           event-type: trigger-static-deploy
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }} 
